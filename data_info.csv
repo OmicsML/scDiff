@@ -1,0 +1,16 @@
+task,dataset_name,processed_filename,batch_key,cell_type_key,condition_key
+Denoising,293T,293T_processed.h5ad,batch,cell_type,none
+Denoising,Jurkat,Jurkat_processed.h5ad,batch,cell_type,none
+Denoising,PBMC1K,PBMC1K_processed.h5ad,batch,cell_type,none
+Annotation,Brain,Brain_processed.h5ad,donor_id,cell_type,none
+Annotation,HLCA (subset),HLCA_zstd_sub.h5ad,batch,cell_type,none
+Annotation,Immune (subset),Immune_sub.h5ad,donor_id,cell_type,none
+Annotation,Liver,Liver_processed.h5ad,donor_id,cell_type,none
+Annotation,PBMC12K,PBMC12K_processed.h5ad,batch,labels,none
+Annotation,Pancreas,Pancreas_processed.h5ad,tech,celltype,none
+Perturbation,Salmonella,salmonella_processed.h5ad,batch,cell_label,condition
+Perturbation,HPoly,hpoly_processed.h5ad,batch,cell_label,condition
+Perturbation,PBMC,pbmc_processed.h5ad,batch,cell_label,condition
+Gene Perturbation,Dixit,dixit_processed.h5ad,none,cell_type,condition
+Gene Perturbation,Adamson,adamson_processed.h5ad,none,cell_type,condition
+Gene Perturbation,Norman,norman_processed.h5ad,none,cell_type,condition

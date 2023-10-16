@@ -1,0 +1,15 @@
+[project]
+name = "scdiff"
+version = "0.1.0"
+
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+license-files = ["LICENSE"]
+zip-safe = false
+include-package-data = true
+
+[tool.setuptools.packages.find]
+namespaces = false  # disable scanning PEP 420 namespaces (true by default)

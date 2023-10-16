@@ -1,0 +1,123 @@
+data:
+  target: main.DataModuleFromConfig
+  params:
+    batch_size: 2048
+    num_workers: 4
+    wrap: false
+    train:
+      target: ???
+      # target: scdiff.data.pbmc12k.PBMC12KTrain
+      # target: scdiff.data.pancreas.Pancreas
+      params:
+        fname: ???
+        save_processed: false
+        post_cond_flag: true
+        splits:
+          train: 0.9
+          valid: 0.0
+          test: 0.1
+    test:
+      target: ???
+      # target: scdiff.data.pbmc12k.PBMC12KTest
+      # target: scdiff.data.pancreas.Pancreas
+      params:
+        fname: ???
+        save_processed: false
+        post_cond_flag: true
+        splits:
+          train: 0.9
+          valid: 0.0
+          test: 0.1
+model:
+  base_learning_rate: 1.0e-08
+  target: scdiff.model.ScDiff
+  params:
+    mask_context: false
+    mask_noised_context: false
+    # Loss
+    balance_loss: false
+    loss_type: l2
+    loss_strategy: recon_full  # recon_full | recon_masked
+    parameterization: x0
+    # Noise scheduler
+    linear_start: 0.0001
+    linear_end: 0.02
+    log_every_t: 200
+    timesteps: 1000
+    # Inputs
+    input_key: input
+    pe_input_key: null
+    cond_key: cond
+    cond_to_ignore: null
+    # Others
+    monitor: val/loss_simple_ema
+    clip_denoised: true
+    # ----------------------------- Task related ------------------------------
+    t_sample: 10  # time step for reconstruction and integration
+    # Reconstruction
+    recon_flag: true
+    recon_sample: false  # one step generation if set to False
+    # Denoising
+    denoise_flag: false
+    denoise_t_sample: 1000
+    # Classification
+    classify_flag: true
+    classifier_config:
+      target: scdiff.modules.classifier.DiffusionClassifier
+      params:
+        query_mode: seen
+        n_samples_list:
+          - 5
+        to_keep_list:
+          - 1  # last to_keep must be 1
+        n_trials: 1
+        loss: l2
+        time_step_sampler: IterativeUniform
+    # Perturbation
+    pert_flag: false
+    # -------------------------------------------------------------------------
+    model_config:
+      target: scdiff.model.DiffusionModel
+      params:
+        # Global settings
+        activation: gelu  # relu | gelu | sigmoid
+        norm_layer: layernorm  # layernorm | batchnorm | groupnorm
+        depth: 6
+        dropout: 0.
+        cell_mask_ratio: 0.25  # ratio of cell to be fully masked
+        mask_mode: v2  # v2: fully mask some cells, and randomly mask x% of cell for the rest (x uniformly drawn)
+        # Encoder
+        embed_dim: 512
+        dim_head: 64
+        num_heads: 8
+        mask_context: false  # DEPRECATED
+        decoder_embed_dim: 512
+        decoder_dim_head: 64
+        decoder_num_heads: 8
+        mlp_time_embed: false
+        # Conditioner
+        cond_type: crossattn  # crossattn | mlp | stackffn
+        cond_emb_type: embedding
+        cond_cat_input: false
+        cond_tokens: 1  # number of tokens to expand
+        cond_mask_ratio: 0.1  # masking portion of conditions during training
+        # Post conditioner
+        post_cond_layers: 1
+        post_cond_norm: batchnorm  # layernorm | batchnorm | groupnorm  (not used when post_cond_layers=1)
+        post_cond_mask_ratio: 0.1
+        # Mask decoder conditioner (applied to denoising encoder)
+        mask_dec_cond: false
+        mask_dec_cond_se: false  # se and semlp are mutually exclusive options
+        mask_dec_cond_semlp: false  # se and semlp are mutually exclusive options
+        mask_dec_cond_ratio: true  # only valid if se and semlp are turned off
+        mask_dec_cond_concat: false
+        # Decoder
+        decoder_embed_type: embedder
+        decoder_mask: inv_enc
+        encoder_type: mlp  # attn | mlp | stackffn | mlpparallel | ffnparallel
+lightning:
+  trainer:
+    log_every_n_steps: 100
+    max_epochs: 2000
+    devices:
+    - 0
