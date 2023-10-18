@@ -1,7 +1,11 @@
 # scDiff
 ![framework](figures/scdiff.png)
 
-This is the official codebase for **A General Single-Cell Analysis Framework via Conditional Diffusion Generative Models.** *scDiff* achieves competitive performance with state-of-the-art models in various benchmarking tasks. By incorporating prior knowledge with large language models and graph neural networks, *scDiff* shows outstanding few-shot and zero-shot results.
+This is the official codebase for [A General Single-Cell Analysis Framework via Conditional Diffusion Generative Models](https://www.biorxiv.org/content/10.1101/2023.10.13.562243v1).
+
+[![Preprint](https://img.shields.io/badge/Preprint-bioRxiv-brightgreen)](https://www.biorxiv.org/content/10.1101/2023.10.13.562243v1)
+
+*scDiff* achieves competitive performance with state-of-the-art models in various benchmarking tasks. By incorporating prior knowledge with large language models and graph neural networks, *scDiff* shows outstanding few-shot and zero-shot results.
 
 ## Installation
 
@@ -38,30 +42,15 @@ tar -xzvf reproducibility.tar.gz && mv reproduce/ data/
 ```bash
 ### Annotation experiments
 SEED=10 bash run/run.sh annotation
-# SEED=10 bash run/run.sh annotation pbmc12k
-# SEED=10 bash run/run.sh annotation pancreas
-# SEED=10 bash run/run.sh annotation_cellxgene liver
-# SEED=10 bash run/run.sh annotation_cellxgene hlcasub
-# SEED=10 bash run/run.sh annotation_cellxgene immunesub
-# SEED=10 bash run/run.sh annotation_cellxgene brain
 
 ### Imputation experiments
 SEED=10 bash run/run.sh denoising
-# SEED=10 bash run/run.sh denoising pbmc1k
-# SEED=10 bash run/run.sh denoising jurkat
-# SEED=10 bash run/run.sh denoising 293t
 
 ### Perturbation experiments
 SEED=10 bash run/run.sh perturbation
-# SEED=10 bash run/run.sh perturbation pbmc
-# SEED=10 bash run/run.sh perturbation hpoly
-# SEED=10 bash run/run.sh perturbation salmonella
 
 ### Gene perturbation experiments
 SEED=10 bash run/run.sh genepert
-# SEED=10 bash run/run.sh genepert adamson
-# SEED=10 bash run/run.sh genepert dixit
-# SEED=10 bash run/run.sh genepert norman
 
 ### One-shot annotation experiments
 SEED=10 TOPK=3 bash run/oneshot.sh
