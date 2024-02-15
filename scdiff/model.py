@@ -753,7 +753,9 @@ class ScDiff(pl.LightningModule):
                                    mask=mask)
 
             if inpaint_flag and i > 0 and mask is not None:
-                x_start, x, _ = self.prepare_noised_input(x_start, i, noise=None, mask=mask, x_inpaint=x_start)
+                # Reset masked entries (inpainting setting)
+                x[~mask] = self.q_sample(x_start=x_start, t=torch.tensor([i], device=device, dtype=torch.long),
+                                         noise=torch.randn_like(x))[~mask]
 
             vlb_list.append(vlb)
             if i % self.log_every_t == 0 or i == self.num_timesteps - 1:
