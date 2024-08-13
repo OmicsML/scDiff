@@ -33,7 +33,7 @@ conda clean --all -y
 # Install gdown for downloading data and pre-trained models
 pip install gdown
 
-gdown https://drive.google.com/file/d/1Dbf1aX-OZ8FOGVEi4PhKiDRcvBOrnyAI/view?usp=sharing --fuzzy
+gdown https://drive.google.com/uc?id=1dI3FS9My-8_TR0C6YSUklHzBHiVVXN4F
 tar -xzvf reproducibility.tar.gz && mv reproduce/ data/
 ```
 
